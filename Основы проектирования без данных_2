@@ -10,6 +10,8 @@
 | 4          | Петров П.    | G-1      | Группа А   | 8          | Козлова Е.   | 3          | Информатика  | 2026-01-25| 5     |
 | 5          | Кузнецов К.  | G-2      | Группа Б   | 7          | Смирнов А.   | 2          | Физика       | 2026-01-22| 4     |
 
+1 Часть
+
 1.Первичный ключ 
 Это student_id - у каждого студента уникальный: 1,2,3,4,5. 
 По нему мы однозначно понимаем, о каком студенте идет речь.
@@ -41,3 +43,110 @@ student_id → subject_id → subject_name
 | 1          | Петров П.    |  4    |
 Таблица находится в 2НФ потому что первичный ключ состоит из одного столбца (student_id)
 До 3НФ таблица не доходит из-за транзитивных зависимостей между неключевыми атрибутами.
+
+2 Часть
+
+1.EA Диаграмма
+                    ┌─────────────────┐
+                    │     Groups      │
+                    ├─────────────────┤
+                    │ PK group_id     │
+                    │    group_name   │
+                    └────────┬────────┘
+                             │
+                             │ 1:N
+                             │
+                    ┌────────▼────────┐
+                    │    Students     │
+                    ├─────────────────┤
+                    │ PK student_id   │
+                    │    student_name │
+                    │ FK group_id     │
+                    └────────┬────────┘
+                             │
+                             │ 1:N
+                             │
+                    ┌────────▼────────┐
+                    │      Exams      │
+                    ├─────────────────┤
+                    │ PK exam_id      │
+                    │ FK student_id   │
+                    │ FK subject_id   │
+                    │    exam_date    │
+                    │    grade        │
+                    └────────┬────────┘
+                             │
+                             │ N:1
+                             │
+                    ┌────────▼────────┐
+                    │    Subjects     │
+                    ├─────────────────┤
+                    │ PK subject_id   │
+                    │    subject_name │
+                    │ FK teacher_id   │
+                    └────────┬────────┘
+                             │
+                             │ N:1
+                             │
+                    ┌────────▼────────┐
+                    │    Teachers     │
+                    ├─────────────────┤
+                    │ PK teacher_id   │
+                    │    teacher_name │
+                    └─────────────────┘
+2.Таблица Groups 
+
+CREATE TABLE Groups (
+    group_id CHAR(3) PRIMARY KEY,
+    group_name VARCHAR(50) NOT NULL UNIQUE
+);
+
+3.Таблица Students
+
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(100) NOT NULL,
+    group_id CHAR(3) NOT NULL,
+
+    FOREIGN KEY (group_id)
+        REFERENCES Groups(group_id)
+);
+
+4.Таблица Teachers
+
+CREATE TABLE Teachers (
+    teacher_id INT PRIMARY KEY,
+    teacher_name VARCHAR(100) NOT NULL
+);
+
+5.Таблица Subjects
+
+CREATE TABLE Subjects (
+    subject_id INT PRIMARY KEY,
+    subject_name VARCHAR(100) NOT NULL UNIQUE,
+    teacher_id INT NOT NULL,
+
+    FOREIGN KEY (teacher_id)
+        REFERENCES Teachers(teacher_id)
+);
+
+6.Таблица Exams
+
+CREATE TABLE Exams (
+    exam_id INT PRIMARY KEY,
+    student_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    exam_date DATE NOT NULL,
+    grade INT NOT NULL,
+
+    FOREIGN KEY (student_id)
+        REFERENCES Students(student_id),
+
+    FOREIGN KEY (subject_id)
+        REFERENCES Subjects(subject_id)
+);
+
+Транзитивынх зависимостей нету. Теперь у нас неключевые данные зависят от ключей своей таблицы и это можно назвать 3НФ.
+
+
+
