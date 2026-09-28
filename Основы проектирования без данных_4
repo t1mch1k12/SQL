@@ -1,177 +1,187 @@
 # База данных стриминговой платформы YouTube
 1. Users — Пользователи
 
-* `user_id` — **PK**
-* `username`
-* `email`
-* `password`
-* `created_at`
- 2. Channels — Каналы
+* user_id — PK
+* username
+* email
+* password
+* created_at
 
-* `channel_id` — **PK**
-* `user_id` — **FK → Users.user_id**
-* `name`
-* `description`
-* `created_at`
- 3. Videos — Видео
+2. Channels — Каналы
 
-* `video_id` — **PK**
-* `channel_id` — **FK → Channels.channel_id**
-* `title`
-* `description`
-* `duration`
-* `published_at`
- 4. Categories — Категории
+* channel_id — PK
+* user_id — FK → Users.user_id
+* name
+* description
+* created_at
 
-* `category_id` — **PK**
-* `name`
-* `description`
- 5. Video_Categories — Категории видео
+3. Videos — Видео
 
-* `video_category_id` — **PK**
-* `video_id` — **FK → Videos.video_id**
-* `category_id` — **FK → Categories.category_id**
- 6. Playlists — Плейлисты
+* video_id — PK
+* channel_id — FK → Channels.channel_id
+* title
+* description
+* duration
+* published_at
 
-* `playlist_id` — **PK**
-* `user_id` — **FK → Users.user_id**
-* `name`
-* `description`
-* `created_at`
+4. Categories — Категории
+
+* category_id — PK
+* name
+* description
+
+5. Video_Categories — Категории видео
+
+* video_category_id — PK
+* video_id — FK → Videos.video_id
+* category_id — FK → Categories.category_id
+
+6. Playlists — Плейлисты
+
+* playlist_id — PK
+* user_id — FK → Users.user_id
+* name
+* description
+* created_at
+
 7. Playlist_Videos — Видео в плейлистах
 
-* `playlist_video_id` — **PK**
-* `playlist_id` — **FK → Playlists.playlist_id**
-* `video_id` — **FK → Videos.video_id**
-* `position`
- 8. Subscriptions — Подписки
+* playlist_video_id — PK
+* playlist_id — FK → Playlists.playlist_id
+* video_id — FK → Videos.video_id
+* position
 
-* `subscription_id` — **PK**
-* `user_id` — **FK → Users.user_id**
-* `channel_id` — **FK → Channels.channel_id**
-* `subscribed_at`
- 9. Comments — Комментарии
+8. Subscriptions — Подписки
 
-* `comment_id` — **PK**
-* `user_id` — **FK → Users.user_id**
-* `video_id` — **FK → Videos.video_id**
-* `text`
-* `created_at`
+* subscription_id — PK
+* user_id — FK → Users.user_id
+* channel_id — FK → Channels.channel_id
+* subscribed_at
+
+9. Comments — Комментарии
+
+* comment_id — PK
+* user_id — FK → Users.user_id
+* video_id — FK → Videos.video_id
+* text
+* created_at
+
 10. Comment_Likes — Лайки комментариев
 
-* `comment_like_id` — **PK**
-* `comment_id` — **FK → Comments.comment_id**
-* `user_id` — **FK → Users.user_id**
-* `created_at`
+* comment_like_id — PK
+* comment_id — FK → Comments.comment_id
+* user_id — FK → Users.user_id
+* created_at
+
 11. Video_Likes — Лайки видео
 
-* `video_like_id` — **PK**
-* `video_id` — **FK → Videos.video_id**
-* `user_id` — **FK → Users.user_id**
-* `created_at`
+* video_like_id — PK
+* video_id — FK → Videos.video_id
+* user_id — FK → Users.user_id
+* created_at
+
 12. Views — Просмотры
 
-* `view_id` — **PK**
-* `video_id` — **FK → Videos.video_id**
-* `user_id` — **FK → Users.user_id**
-* `viewed_at`
-* `watch_time`
+* view_id — PK
+* video_id — FK → Videos.video_id
+* user_id — FK → Users.user_id
+* viewed_at
+* watch_time
+
  13. Tags — Теги
 
-* `tag_id` — **PK**
-* `name`
+* tag_id — PK
+* name
 
-## 14. Video_Tags — Теги видео
+14. Video_Tags — Теги видео
 
-* `video_tag_id` — **PK**
-* `video_id` — **FK → Videos.video_id**
-* `tag_id` — **FK → Tags.tag_id**
+* video_tag_id — PK
+* video_id — FK → Videos.video_id
+* tag_id — FK → Tags.tag_id
 
-## 15. Notifications — Уведомления
+15. Notifications — Уведомления
 
-* `notification_id` — **PK**
-* `user_id` — **FK → Users.user_id**
-* `video_id` — **FK → Videos.video_id**
-* `text`
-* `is_read`
-* `created_at`
+* notification_id — PK
+* user_id — FK → Users.user_id
+* video_id — FK → Videos.video_id
+* text
+* is_read
+* created_at
 
-## 16. Reports — Жалобы
+16. Reports — Жалобы
 
-* `report_id` — **PK**
-* `user_id` — **FK → Users.user_id**
-* `video_id` — **FK → Videos.video_id**
-* `reason`
-* `created_at`
+* report_id — PK
+* user_id — FK → Users.user_id
+* video_id — FK → Videos.video_id
+* reason
+* created_at
 
-## 17. Live_Streams — Прямые трансляции
+17. Live_Streams — Прямые трансляции
 
-* `stream_id` — **PK**
-* `channel_id` — **FK → Channels.channel_id**
-* `title`
-* `started_at`
-* `ended_at`
-* `status`
+* stream_id — PK
+* channel_id — FK → Channels.channel_id
+* title
+* started_at
+* ended_at
+* status
 
-## 18. Memberships — Участники канала
+18. Memberships — Участники канала
 
-* `membership_id` — **PK**
-* `user_id` — **FK → Users.user_id**
-* `channel_id` — **FK → Channels.channel_id**
-* `started_at`
-* `status`
+* membership_id — PK
+* user_id — FK → Users.user_id
+* channel_id — FK → Channels.channel_id
+* started_at
+* status
 
-## 19. Payments — Платежи
+19. Payments — Платежи
 
-* `payment_id` — **PK**
-* `user_id` — **FK → Users.user_id**
-* `membership_id` — **FK → Memberships.membership_id**
-* `amount`
-* `payment_date`
-* `status`
+* payment_id — PK
+* user_id — FK → Users.user_id
+* membership_id — FK → Memberships.membership_id
+* amount
+* payment_date
+* status
 
-## 20. Channel_Banners — Оформление каналов
+20. Channel_Banners — Оформление каналов
 
-* `banner_id` — **PK**
-* `channel_id` — **FK → Channels.channel_id**
-* `image_url`
-* `updated_at`
-
----
+* banner_id — PK
+* channel_id — FK → Channels.channel_id
+* image_url
+* updated_at
 
 # Связи между таблицами
 
 На диаграмме проведи следующие связи:
 
-| FK                             | → | PK                          |
-| ------------------------------ | - | --------------------------- |
-| `Channels.user_id`             | → | `Users.user_id`             |
-| `Videos.channel_id`            | → | `Channels.channel_id`       |
-| `Video_Categories.video_id`    | → | `Videos.video_id`           |
-| `Video_Categories.category_id` | → | `Categories.category_id`    |
-| `Playlists.user_id`            | → | `Users.user_id`             |
-| `Playlist_Videos.playlist_id`  | → | `Playlists.playlist_id`     |
-| `Playlist_Videos.video_id`     | → | `Videos.video_id`           |
-| `Subscriptions.user_id`        | → | `Users.user_id`             |
-| `Subscriptions.channel_id`     | → | `Channels.channel_id`       |
-| `Comments.user_id`             | → | `Users.user_id`             |
-| `Comments.video_id`            | → | `Videos.video_id`           |
-| `Comment_Likes.comment_id`     | → | `Comments.comment_id`       |
-| `Comment_Likes.user_id`        | → | `Users.user_id`             |
-| `Video_Likes.video_id`         | → | `Videos.video_id`           |
-| `Video_Likes.user_id`          | → | `Users.user_id`             |
-| `Views.video_id`               | → | `Videos.video_id`           |
-| `Views.user_id`                | → | `Users.user_id`             |
-| `Video_Tags.video_id`          | → | `Videos.video_id`           |
-| `Video_Tags.tag_id`            | → | `Tags.tag_id`               |
-| `Notifications.user_id`        | → | `Users.user_id`             |
-| `Notifications.video_id`       | → | `Videos.video_id`           |
-| `Reports.user_id`              | → | `Users.user_id`             |
-| `Reports.video_id`             | → | `Videos.video_id`           |
-| `Live_Streams.channel_id`      | → | `Channels.channel_id`       |
-| `Memberships.user_id`          | → | `Users.user_id`             |
-| `Memberships.channel_id`       | → | `Channels.channel_id`       |
-| `Payments.user_id`             | → | `Users.user_id`             |
-| `Payments.membership_id`       | → | `Memberships.membership_id` |
-| `Channel_Banners.channel_id`   | → | `Channels.channel_id`       |
+| FK                           | → | PK                        |
+| -----------------------------| - | --------------------------|
+| Channels.user_id             | → | Users.user_id             |
+| Videos.channel_id            | → | Channels.channel_id       |
+| Video_Categories.video_id    | → | Videos.video_id           |
+| Video_Categories.category_id | → | Categories.category_id    |
+| Playlists.user_id            | → | Users.user_id             |
+| Playlist_Videos.playlist_id  | → | Playlists.playlist_id     |
+| Playlist_Videos.video_id     | → | Videos.video_id           |
+| Subscriptions.user_id        | → | Users.user_id             |
+| Subscriptions.channel_id     | → | Channels.channel_id       |
+| Comments.user_id             | → | Users.user_id             |
+| Comments.video_id            | → | Videos.video_id           |
+| Comment_Likes.comment_id     | → | Com-ments.comment_id      |
+| Comment_Likes.user_id        | → | Users.user_id             |
+| Video_Likes.video_id         | → | Videos.video_id           |
+| Video_Likes.user_id          | → | Users.user_id             |
+| Views.video_id               | → | Videos.video_id           |
+| Views.user_id                | → | Users.user_id             |
+| Video_Tags.video_id          | → | Videos.video_id           |
+| Video_Tags.tag_id            | → | Tags.tag_id               |
+| Notifications.user_id        | → | Users.user_id             |
+| Notifications.video_id       | → | Videos.video_id           |
+| Reports.user_id              | → | Users.user_id             |
+| Reports.video_id             | → | Videos.video_id           |
+| Live_Streams.channel_id      | → | Channels.channel_id       |
+| Memberships.user_id          | → | Users.user_id             |
+| Memberships.channel_id       | → | Channels.channel_id       |
+| Payments.user_id             | → | Users.user_id             |
+| Payments.membership_id       | → | Member-ships.membership_id|
+| Channel_Banners.channel_id   | → | Channels.channel_id       |
 
